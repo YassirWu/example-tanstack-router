@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useFakeNavigationContext } from "../FakeNavigationContext/FakeNavigationContext";
+import { useNavigate } from "@tanstack/react-router";
 
 const SearchBar = () => {
-  const { onChangePage } = useFakeNavigationContext();
+  const navigate = useNavigate();
 
   const [value, setValue] = useState("");
 
@@ -10,10 +10,7 @@ const SearchBar = () => {
     e.preventDefault();
 
     // redirection
-    onChangePage({
-      newCurrentPage: "searchpokemon",
-      newValueSearch: value,
-    });
+    navigate({ to: "/search", search: { value } });
 
     // clear value
     setValue("");

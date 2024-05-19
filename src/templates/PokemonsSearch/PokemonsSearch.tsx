@@ -4,6 +4,7 @@ import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import { useState } from "react";
 import { PokemonGeneration } from "../../types";
 import { dropdownGenerationOptions } from "./PokemonsSearch.utils";
+import { useNavigate } from "@tanstack/react-router";
 
 const PokemonSearchSkeleton = () => {
   return (
@@ -30,6 +31,7 @@ const PokemonsSearch = ({
   valueSearch,
   defaultPokemonGeneration,
 }: PokemonsSearchProps) => {
+  const navigate = useNavigate();
   const [generation, setGeneration] = useState<PokemonGeneration | undefined>(
     defaultPokemonGeneration
   );
@@ -46,6 +48,10 @@ const PokemonsSearch = ({
     newPokemonGeneration: PokemonGeneration | undefined
   ) => {
     setGeneration(newPokemonGeneration);
+    navigate({
+      to: "/search",
+      search: { value: valueSearch, generation: newPokemonGeneration },
+    });
   };
 
   return (
@@ -63,7 +69,9 @@ const PokemonsSearch = ({
         className="cursor-pointer mb-4"
       >
         {dropdownGenerationOptions.map((option) => (
-          <option value={option.value}>{option.title}</option>
+          <option value={option.value} key={option.title}>
+            {option.title}
+          </option>
         ))}
       </select>
 

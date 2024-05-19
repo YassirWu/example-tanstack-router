@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemonTypes } from "../../data/fetchPokemonTypes";
-import { useFakeNavigationContext } from "../../components/FakeNavigationContext/FakeNavigationContext";
+import { Link } from "@tanstack/react-router";
 
 const ListPokemonTypesSkeleton = () => {
   return (
@@ -19,7 +19,6 @@ const ListPokemonTypesSkeleton = () => {
 };
 
 const ListPokemonTypes = () => {
-  const { onClickType } = useFakeNavigationContext();
   const { data: pokemonTypes } = useQuery({
     queryKey: ["listpokemontypes"],
     queryFn: fetchPokemonTypes,
@@ -33,12 +32,9 @@ const ListPokemonTypes = () => {
     <ul className="grid grid-cols-4 gap-4">
       {pokemonTypes.map((pokemonType) => (
         <div key={pokemonType.id}>
-          <a
-            href={`/pokemons-types/${pokemonType.name}/pokemons`}
-            onClick={(e) => {
-              e.preventDefault();
-              onClickType(pokemonType.name);
-            }}
+          <Link
+            to="/pokemons-types/$type/pokemons"
+            params={{ type: pokemonType.name }}
           >
             <div className="border p-4 rounded-md shadow-md">
               <img
@@ -50,7 +46,7 @@ const ListPokemonTypes = () => {
                 {pokemonType.name}
               </h3>
             </div>
-          </a>
+          </Link>
         </div>
       ))}
     </ul>

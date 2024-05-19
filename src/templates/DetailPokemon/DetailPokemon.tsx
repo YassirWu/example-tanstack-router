@@ -1,9 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchPokemonById } from "../../data/fetchPokemonById";
-import { useFakeNavigationContext } from "../../components/FakeNavigationContext/FakeNavigationContext";
+import { Link } from "@tanstack/react-router";
+import { Pokemon } from "../../types";
 
 type DetailPokemonProps = {
-  id: number;
+  pokemon: Pokemon;
 };
 
 const MAX_HP = 255;
@@ -43,18 +42,7 @@ const PokemonStats = ({
   );
 };
 
-const DetailPokemon = ({ id }: DetailPokemonProps) => {
-  const { onClickPokemon } = useFakeNavigationContext();
-
-  const { data: pokemon } = useQuery({
-    queryKey: ["pokemon", id],
-    queryFn: () => fetchPokemonById(id),
-  });
-
-  if (!pokemon) {
-    return null;
-  }
-
+const DetailPokemon = ({ pokemon }: DetailPokemonProps) => {
   const { stats, apiPreEvolution, apiEvolutions } = pokemon;
 
   return (
@@ -119,15 +107,12 @@ const DetailPokemon = ({ id }: DetailPokemonProps) => {
             </h2>
 
             <p className="pl-4">
-              <a
-                href={`/pokemons/${apiPreEvolution.pokedexIdd}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onClickPokemon(apiPreEvolution.pokedexIdd);
-                }}
+              <Link
+                to="/pokemons/$id"
+                params={{ id: apiPreEvolution.pokedexIdd }}
               >
                 {apiPreEvolution.name}
-              </a>
+              </Link>
             </p>
           </div>
         )}
@@ -144,15 +129,9 @@ const DetailPokemon = ({ id }: DetailPokemonProps) => {
                   key={evolution.pokedexId}
                   className={`${apiEvolutions.length > 1 ? "list-disc" : ""}`}
                 >
-                  <a
-                    href={`/pokemons/${evolution.pokedexId}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onClickPokemon(evolution.pokedexId);
-                    }}
-                  >
+                  <Link to="/pokemons/$id" params={{ id: evolution.pokedexId }}>
                     {evolution.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
