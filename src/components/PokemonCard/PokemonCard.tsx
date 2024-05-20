@@ -1,20 +1,11 @@
 import { Pokemon } from "../../types";
-import { useFakeNavigationContext } from "../FakeNavigationContext/FakeNavigationContext";
 
 type PokemonCardProps = { pokemon: Pokemon };
 
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
-  const { onClickPokemon } = useFakeNavigationContext();
-
   return (
     <div className="card">
-      <a
-        href={`/pokemons/${pokemon.id}`}
-        onClick={(e) => {
-          e.preventDefault();
-          onClickPokemon(pokemon.id);
-        }}
-      >
+      <a href={`/pokemons/${pokemon.id}`}>
         <div className="border p-3 rounded-md shadow-md">
           <img alt={pokemon.name} src={pokemon.image} className="w-full mb-4" />
           <h3 className="text-xl font-semibold mb-4">{pokemon.name}</h3>

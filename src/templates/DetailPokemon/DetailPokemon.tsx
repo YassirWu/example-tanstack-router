@@ -1,4 +1,3 @@
-import { useFakeNavigationContext } from "../../components/FakeNavigationContext/FakeNavigationContext";
 import { Pokemon } from "../../types";
 
 const MAX_HP = 255;
@@ -42,8 +41,6 @@ type DetailPokemonProps = {
   pokemon: Pokemon;
 };
 const DetailPokemon = ({ pokemon }: DetailPokemonProps) => {
-  const { onClickPokemon } = useFakeNavigationContext();
-
   const { stats, apiPreEvolution, apiEvolutions } = pokemon;
 
   return (
@@ -108,13 +105,7 @@ const DetailPokemon = ({ pokemon }: DetailPokemonProps) => {
             </h2>
 
             <p className="pl-4">
-              <a
-                href={`/pokemons/${apiPreEvolution.pokedexIdd}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onClickPokemon(apiPreEvolution.pokedexIdd);
-                }}
-              >
+              <a href={`/pokemons/${apiPreEvolution.pokedexIdd}`}>
                 {apiPreEvolution.name}
               </a>
             </p>
@@ -133,13 +124,7 @@ const DetailPokemon = ({ pokemon }: DetailPokemonProps) => {
                   key={evolution.pokedexId}
                   className={`${apiEvolutions.length > 1 ? "list-disc" : ""}`}
                 >
-                  <a
-                    href={`/pokemons/${evolution.pokedexId}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onClickPokemon(evolution.pokedexId);
-                    }}
-                  >
+                  <a href={`/pokemons/${evolution.pokedexId}`}>
                     {evolution.name}
                   </a>
                 </li>

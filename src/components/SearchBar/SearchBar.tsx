@@ -1,19 +1,12 @@
 import { useState } from "react";
-import { useFakeNavigationContext } from "../FakeNavigationContext/FakeNavigationContext";
 
 const SearchBar = () => {
-  const { onChangePage } = useFakeNavigationContext();
-
   const [value, setValue] = useState("");
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    // redirection
-    onChangePage({
-      newCurrentPage: "searchpokemon",
-      newValueSearch: value,
-    });
+    // handle redirection here
 
     // clear value
     setValue("");
